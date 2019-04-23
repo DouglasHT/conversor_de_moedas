@@ -4,7 +4,9 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-const request = "https://api.hgbrasil.com/finance?format=json&key=1ac7d39d";
+//colocar a chave gerada no site hgbrasil no final da url
+
+const request = "https://api.hgbrasil.com/finance?format=json&key=SUA-CHAVE";
 
 void main() async {
   runApp(MaterialApp(
@@ -24,7 +26,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   final realController = TextEditingController();
   final dolarController = TextEditingController();
   final euroController = TextEditingController();
@@ -32,19 +33,19 @@ class _HomeState extends State<Home> {
   double dolar;
   double euro;
 
-  void _realChanged(String text){
+  void _realChanged(String text) {
     double real = double.parse(text);
-    dolarController.text = (real/dolar).toStringAsFixed(2);
-    euroController.text = (real/euro).toStringAsFixed(2);
+    dolarController.text = (real / dolar).toStringAsFixed(2);
+    euroController.text = (real / euro).toStringAsFixed(2);
   }
 
-  void _dolarChanged(String text){
+  void _dolarChanged(String text) {
     double dolar = double.parse(text);
     realController.text = (dolar * this.dolar).toStringAsFixed(2);
     euroController.text = (dolar * this.dolar / euro).toStringAsFixed(2);
   }
 
-  void _euroChanged(String text){
+  void _euroChanged(String text) {
     double euro = double.parse(text);
     realController.text = (euro * this.euro).toStringAsFixed(2);
     dolarController.text = (euro * this.euro / dolar).toStringAsFixed(2);
@@ -99,11 +100,14 @@ class _HomeState extends State<Home> {
                           children: <Widget>[
                             Icon(Icons.attach_money,
                                 size: 150.0, color: Colors.amber),
-                            buildTextField("Real", "R\$", realController, _realChanged),
+                            buildTextField(
+                                "Real", "R\$", realController, _realChanged),
                             Divider(),
-                            buildTextField("Dólar", "US\$", dolarController, _dolarChanged),
+                            buildTextField("Dólar", "US\$", dolarController,
+                                _dolarChanged),
                             Divider(),
-                            buildTextField("Euro", "€", euroController, _euroChanged),
+                            buildTextField(
+                                "Euro", "€", euroController, _euroChanged),
                           ],
                         ));
                   }
@@ -112,9 +116,8 @@ class _HomeState extends State<Home> {
   }
 }
 
-
-Widget buildTextField(String label, String prefix, TextEditingController c, Function f){
-
+Widget buildTextField(
+    String label, String prefix, TextEditingController c, Function f) {
   return TextField(
     controller: c,
     decoration: InputDecoration(
